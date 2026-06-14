@@ -29,6 +29,7 @@ export const RegisterPage: React.FC = () => {
     }
 
     setIsLoading(true);
+    localStorage.removeItem('business_nexus_tour_completed');
 
     try {
       await register(name, email, password, role);

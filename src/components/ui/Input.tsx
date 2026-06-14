@@ -21,22 +21,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
 }, ref) => {
   
   const widthClass = fullWidth ? 'w-full' : '';
-  const errorClass = error ? 'border-error-500 focus:border-error-500 focus:ring-error-500' : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500';
+  const errorClass = error ? 'border-error-500 focus:border-error-500 focus:ring-error-500' : 'border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500';
   
-  const inputBaseClass = `block rounded-md shadow-sm focus:ring-2 focus:ring-opacity-50 sm:text-sm ${errorClass}`;
+  const inputBaseClass = `block rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-opacity-50 sm:text-sm ${errorClass}`;
   const adornmentClass = startAdornment ? 'pl-10' : '';
   
   return (
     <div className={`${widthClass} ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
           {label}
         </label>
       )}
       
       <div className="relative">
         {startAdornment && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
             {startAdornment}
           </div>
         )}
@@ -48,14 +48,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
         />
         
         {endAdornment && (
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-500">
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
             {endAdornment}
           </div>
         )}
       </div>
       
       {(error || helperText) && (
-        <p className={`mt-1 text-sm ${error ? 'text-error-500' : 'text-gray-500'}`}>
+        <p className={`mt-1 text-sm ${error ? 'text-error-500' : 'text-gray-500 dark:text-gray-400'}`}>
           {error || helperText}
         </p>
       )}

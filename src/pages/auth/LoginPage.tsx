@@ -44,6 +44,7 @@ export const LoginPage: React.FC = () => {
     setPassword('password123');
     setRole(userRole);
     setError(null);
+    localStorage.removeItem('business_nexus_tour_completed');
     setIsLoading(true);
     try {
       await login(demoEmail, 'password123', userRole);

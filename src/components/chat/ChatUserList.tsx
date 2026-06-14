@@ -23,9 +23,9 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
   };
 
   return (
-    <div className="bg-white border-r border-gray-200 w-full md:w-64 overflow-y-auto">
+    <div className="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 w-full md:w-64 overflow-y-auto">
       <div className="py-4">
-        <h2 className="px-4 text-lg font-semibold text-gray-800 mb-4">Messages</h2>
+        <h2 className="px-4 text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Messages</h2>
         
         <div className="space-y-1">
           {conversations.length > 0 ? (
@@ -45,8 +45,8 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
                   key={conversation.id}
                   className={`px-4 py-3 flex cursor-pointer transition-colors duration-200 ${
                     isActive
-                      ? 'bg-primary-50 border-l-4 border-primary-600'
-                      : 'hover:bg-gray-50 border-l-4 border-transparent'
+                      ? 'bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-600'
+                      : 'hover:bg-gray-50 dark:hover:bg-gray-700 border-l-4 border-transparent'
                   }`}
                   onClick={() => handleSelectUser(otherUser.id)}
                 >
@@ -60,7 +60,7 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
                   
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-baseline">
-                      <h3 className="text-sm font-medium text-gray-900 truncate">
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                         {otherUser.name}
                       </h3>
                       

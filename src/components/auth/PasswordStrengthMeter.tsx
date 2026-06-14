@@ -27,7 +27,7 @@ export const PasswordStrengthMeter: React.FC<PasswordStrengthMeterProps> = ({ pa
     <div className="space-y-1.5">
       <div className="flex gap-1">
         {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className={`h-1.5 flex-1 rounded-full ${i <= score ? color : 'bg-gray-200'}`} />
+          <div key={i} className={`h-1.5 flex-1 rounded-full ${i <= score ? color : 'bg-gray-200 dark:bg-gray-600'}`} />
         ))}
       </div>
       <p className={`text-xs font-medium ${bg} px-2 py-0.5 rounded inline-block`}>
