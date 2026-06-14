@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, PieChart, Filter, Search, PlusCircle } from 'lucide-react';
+import { Users, Calendar, Wallet, Filter, Search, PlusCircle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -10,13 +10,24 @@ import { useAuth } from '../../context/AuthContext';
 import { Entrepreneur } from '../../types';
 import { entrepreneurs } from '../../data/users';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
+import { getConfirmedMeetingsForUser } from '../../data/meetings';
+import { getWallet } from '../../data/payments';
 
 export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const [confirmedMeetingsCount, setConfirmedMeetingsCount] = useState(0);
+  const [walletBalance, setWalletBalance] = useState(0);
   
   if (!user) return null;
+
+  useEffect(() => {
+    const meetings = getConfirmedMeetingsForUser(user.id);
+    setConfirmedMeetingsCount(meetings.length);
+    const wallet = getWallet(user.id);
+    setWalletBalance(wallet.balance);
+  }, [user]);
   
   // Get collaboration requests sent by this investor
   const sentRequests = getRequestsFromInvestor(user.id);
@@ -101,7 +112,7 @@ export const InvestorDashboard: React.FC = () => {
       </div>
       
       {/* Stats summary */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-primary-50 border border-primary-100">
           <CardBody>
             <div className="flex items-center">
@@ -116,19 +127,21 @@ export const InvestorDashboard: React.FC = () => {
           </CardBody>
         </Card>
         
-        <Card className="bg-secondary-50 border border-secondary-100">
-          <CardBody>
-            <div className="flex items-center">
-              <div className="p-3 bg-secondary-100 rounded-full mr-4">
-                <PieChart size={20} className="text-secondary-700" />
+        <Link to="/payments" className="block">
+          <Card className="bg-secondary-50 border border-secondary-100 hover:bg-secondary-100 transition-colors">
+            <CardBody>
+              <div className="flex items-center">
+                <div className="p-3 bg-secondary-100 rounded-full mr-4">
+                  <Wallet size={20} className="text-secondary-700" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-secondary-700">Wallet Balance</p>
+                  <h3 className="text-xl font-semibold text-secondary-900">${walletBalance.toLocaleString()}</h3>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-medium text-secondary-700">Industries</p>
-                <h3 className="text-xl font-semibold text-secondary-900">{industries.length}</h3>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
+            </CardBody>
+          </Card>
+        </Link>
         
         <Card className="bg-accent-50 border border-accent-100">
           <CardBody>
@@ -145,6 +158,22 @@ export const InvestorDashboard: React.FC = () => {
             </div>
           </CardBody>
         </Card>
+        
+        <Link to="/meetings" className="block">
+          <Card className="bg-success-50 border border-success-100 hover:bg-success-100 transition-colors">
+            <CardBody>
+              <div className="flex items-center">
+                <div className="p-3 bg-green-100 rounded-full mr-4">
+                  <Calendar size={20} className="text-success-700" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-success-700">Upcoming Meetings</p>
+                  <h3 className="text-xl font-semibold text-success-900">{confirmedMeetingsCount}</h3>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Link>
       </div>
       
       {/* Entrepreneurs grid */}

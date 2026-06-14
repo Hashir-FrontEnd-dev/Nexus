@@ -68,6 +68,81 @@ export interface Document {
   ownerId: string;
 }
 
+export interface AvailabilitySlot {
+  id: string;
+  userId: string;
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  isAvailable: boolean;
+}
+
+export interface MeetingRequest {
+  id: string;
+  requesterId: string;
+  recipientId: string;
+  proposedDate: string;
+  proposedTime: string;
+  durationMinutes: number;
+  message: string;
+  status: 'pending' | 'accepted' | 'declined';
+  createdAt: string;
+}
+
+export interface Meeting {
+  id: string;
+  requestId: string;
+  requesterId: string;
+  recipientId: string;
+  date: string;
+  time: string;
+  durationMinutes: number;
+  status: 'confirmed' | 'completed' | 'cancelled';
+  createdAt: string;
+}
+
+export type DocumentStatus = 'draft' | 'pending_review' | 'signed' | 'completed' | 'rejected';
+
+export interface ChamberDocument {
+  id: string;
+  name: string;
+  type: string;
+  size: string;
+  uploadedAt: string;
+  status: DocumentStatus;
+  url: string;
+  ownerId: string;
+  pages?: number;
+}
+
+export interface Signature {
+  id: string;
+  documentId: string;
+  userId: string;
+  signedAt: string;
+  dataUrl: string;
+}
+
+export type TransactionType = 'deposit' | 'withdraw' | 'transfer';
+export type TransactionStatus = 'pending' | 'completed' | 'failed';
+
+export interface Transaction {
+  id: string;
+  type: TransactionType;
+  amount: number;
+  senderId: string;
+  receiverId: string;
+  description: string;
+  status: TransactionStatus;
+  createdAt: string;
+}
+
+export interface Wallet {
+  userId: string;
+  balance: number;
+  currency: string;
+}
+
 export interface AuthContextType {
   user: User | null;
   login: (email: string, password: string, role: UserRole) => Promise<void>;

@@ -4,6 +4,7 @@ import { User, Mail, Lock, CircleDollarSign, Building2, AlertCircle } from 'luci
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { PasswordStrengthMeter } from '../../components/auth/PasswordStrengthMeter';
 import { UserRole } from '../../types';
 
 export const RegisterPage: React.FC = () => {
@@ -14,32 +15,30 @@ export const RegisterPage: React.FC = () => {
   const [role, setRole] = useState<UserRole>('entrepreneur');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { register } = useAuth();
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    
-    // Validate passwords match
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       await register(name, email, password, role);
-      // Redirect based on user role
       navigate(role === 'entrepreneur' ? '/dashboard/entrepreneur' : '/dashboard/investor');
     } catch (err) {
       setError((err as Error).message);
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -67,7 +66,7 @@ export const RegisterPage: React.FC = () => {
               <span>{error}</span>
             </div>
           )}
-          
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -86,7 +85,7 @@ export const RegisterPage: React.FC = () => {
                   <Building2 size={18} className="mr-2" />
                   Entrepreneur
                 </button>
-                
+
                 <button
                   type="button"
                   className={`py-3 px-4 border rounded-md flex items-center justify-center transition-colors ${
@@ -101,47 +100,52 @@ export const RegisterPage: React.FC = () => {
                 </button>
               </div>
             </div>
-            
+
             <Input
               label="Full name"
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
               required
               fullWidth
               startAdornment={<User size={18} />}
             />
-            
+
             <Input
               label="Email address"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               fullWidth
               startAdornment={<Mail size={18} />}
             />
-            
-            <Input
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<Lock size={18} />}
-            />
-            
+
+            <div>
+              <Input
+                label="Password"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                fullWidth
+                startAdornment={<Lock size={18} />}
+              />
+              <div className="mt-2">
+                <PasswordStrengthMeter password={password} />
+              </div>
+            </div>
+
             <Input
               label="Confirm password"
               type="password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={e => setConfirmPassword(e.target.value)}
               required
               fullWidth
               startAdornment={<Lock size={18} />}
             />
-            
+
             <div className="flex items-center">
               <input
                 id="terms"
@@ -152,25 +156,17 @@ export const RegisterPage: React.FC = () => {
               />
               <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
                 I agree to the{' '}
-                <a href="#" className="font-medium text-primary-600 hover:text-primary-500">
-                  Terms of Service
-                </a>{' '}
+                <a href="#" className="font-medium text-primary-600 hover:text-primary-500">Terms of Service</a>{' '}
                 and{' '}
-                <a href="#" className="font-medium text-primary-600 hover:text-primary-500">
-                  Privacy Policy
-                </a>
+                <a href="#" className="font-medium text-primary-600 hover:text-primary-500">Privacy Policy</a>
               </label>
             </div>
-            
-            <Button
-              type="submit"
-              fullWidth
-              isLoading={isLoading}
-            >
+
+            <Button type="submit" fullWidth isLoading={isLoading}>
               Create account
             </Button>
           </form>
-          
+
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -180,13 +176,11 @@ export const RegisterPage: React.FC = () => {
                 <span className="px-2 bg-white text-gray-500">Or</span>
               </div>
             </div>
-            
+
             <div className="mt-2 text-center">
               <p className="text-sm text-gray-600">
                 Already have an account?{' '}
-                <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500">
-                  Sign in
-                </Link>
+                <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500">Sign in</Link>
               </p>
             </div>
           </div>

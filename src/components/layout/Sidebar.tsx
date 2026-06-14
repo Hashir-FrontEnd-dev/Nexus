@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   Home, Building2, CircleDollarSign, Users, MessageCircle, 
-  Bell, FileText, Settings, HelpCircle
+  Bell, FileText, FileSignature, Settings, HelpCircle, Calendar, Video, Wallet
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -41,6 +41,10 @@ export const Sidebar: React.FC = () => {
     { to: '/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
     { to: '/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
     { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/video', icon: <Video size={20} />, text: 'Video Call' },
+    { to: '/meetings', icon: <Calendar size={20} />, text: 'Calendar' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
+    { to: '/document-chamber', icon: <FileSignature size={20} />, text: 'Document Chamber' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/documents', icon: <FileText size={20} />, text: 'Documents' },
   ];
@@ -50,6 +54,10 @@ export const Sidebar: React.FC = () => {
     { to: '/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
     { to: '/entrepreneurs', icon: <Users size={20} />, text: 'Find Startups' },
     { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/video', icon: <Video size={20} />, text: 'Video Call' },
+    { to: '/meetings', icon: <Calendar size={20} />, text: 'Calendar' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
+    { to: '/document-chamber', icon: <FileSignature size={20} />, text: 'Document Chamber' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/deals', icon: <FileText size={20} />, text: 'Deals' },
   ];
