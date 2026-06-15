@@ -48,7 +48,7 @@ export const LoginPage: React.FC = () => {
     setIsLoading(true);
     try {
       await login(demoEmail, 'password123', userRole);
-      navigate(userRole === 'entrepreneur' ? '/dashboard/entrepreneur' : '/dashboard/investor');
+      setStep('otp');
     } catch (err) {
       setError((err as Error).message);
       setIsLoading(false);
