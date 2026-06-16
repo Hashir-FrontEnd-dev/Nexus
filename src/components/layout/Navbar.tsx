@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Menu, X, Bell, MessageCircle, User, LogOut, Building2, CircleDollarSign, Sun, Moon } from 'lucide-react';
+import { Menu, X, Bell, MessageCircle, User, LogOut, Building2, CircleDollarSign, Sun, Moon, Calendar, Video, Wallet, FileSignature, Users, Home, FileText } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { Avatar } from '../ui/Avatar';
@@ -53,6 +53,30 @@ export const Navbar: React.FC = () => {
       path: profileRoute,
     }
   ];
+
+  const mobileNavItems = user ? (user.role === 'entrepreneur' ? [
+    { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' },
+    { to: '/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
+    { to: '/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
+    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/video', icon: <Video size={20} />, text: 'Video Call' },
+    { to: '/meetings', icon: <Calendar size={20} />, text: 'Calendar' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
+    { to: '/document-chamber', icon: <FileSignature size={20} />, text: 'Document Chamber' },
+    { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
+    { to: '/documents', icon: <FileText size={20} />, text: 'Documents' },
+  ] : [
+    { to: '/dashboard/investor', icon: <Home size={20} />, text: 'Dashboard' },
+    { to: '/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
+    { to: '/entrepreneurs', icon: <Users size={20} />, text: 'Find Startups' },
+    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/video', icon: <Video size={20} />, text: 'Video Call' },
+    { to: '/meetings', icon: <Calendar size={20} />, text: 'Calendar' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
+    { to: '/document-chamber', icon: <FileSignature size={20} />, text: 'Document Chamber' },
+    { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
+    { to: '/deals', icon: <FileText size={20} />, text: 'Deals' },
+  ]) : [];
   
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md transition-colors duration-200">
@@ -169,10 +193,10 @@ export const Navbar: React.FC = () => {
                 </div>
                 
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-2">
-                  {navLinks.map((link, index) => (
+                  {mobileNavItems.map((link, index) => (
                     <Link
                       key={index}
-                      to={link.path}
+                      to={link.to}
                       className="flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
                       onClick={() => setIsMenuOpen(false)}
                     >
